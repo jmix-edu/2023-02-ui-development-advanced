@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://postBrowse.caption"
+        focusComponent="postsTable">
+    <data readOnly="true">
+        <collection id="postsDc"
+                    class="com.company.jmixpm.entity.Post">
+            <loader id="postsDl"/>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="postsTable" spacing="true">
+        <groupTable id="postsTable"
+                    width="100%"
+                    dataContainer="postsDc">
+            <actions>
+                <action id="viewUserInfo" caption="View user info" icon="VIEW_ACTION"
+                        trackSelection="true"/>
+            </actions>
+            <columns>
+                <column id="title"/>
+                <column id="body"/>
+            </columns>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="viewUserInfoBtn" action="postsTable.viewUserInfo"/>
+            </buttonsPanel>
+        </groupTable>
+        <pagination id="pagination"
+                    align="MIDDLE_CENTER"
+                    itemsPerPageDefaultValue="20"
+                    maxVisiblePages="3">
+            <loaderProvider loaderId="postsDl"/>
+        </pagination>
+    </layout>
+</window>
