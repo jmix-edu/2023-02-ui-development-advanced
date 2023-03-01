@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:chart="http://jmix.io/schema/ui/charts"
+        caption="msg://chartScreen.caption">
+    <data>
+        <collection id="incomeExpensesDtoesDc"
+                    class="com.company.jmixpm.entity.IncomeExpensesDto">
+            <fetchPlan extends="_base"/>
+            <loader id="incomeExpensesDtoesDl"/>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout expand="chart">
+        <chart:serialChart id="chart"
+                           dataContainer="incomeExpensesDtoesDc"
+                           categoryField="year"
+                           width="100%">
+            <chart:graphs>
+                <chart:graph id="incomeGraph"
+                             valueField="income"
+                             fillAlphas="1"
+                             labelText="Income"
+                             type="COLUMN"/>
+                <chart:graph id="expenseGraph"
+                             fillAlphas="1"
+                             valueField="expenses"
+                             type="COLUMN"/>
+            </chart:graphs>
+        </chart:serialChart>
+    </layout>
+</window>
