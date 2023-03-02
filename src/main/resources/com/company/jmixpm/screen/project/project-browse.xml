@@ -51,11 +51,7 @@
                 <column id="endDate"/>
                 <column id="manager"/>
             </columns>
-            <simplePagination
-                    autoLoad="true"
-                    itemsPerPageDefaultValue="40"
-                    itemsPerPageOptions="20, 30, 40, 50, 200"
-                    itemsPerPageVisible="true"/>
+            <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn" action="projectsTable.create"/>

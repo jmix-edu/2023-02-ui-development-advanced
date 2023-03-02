@@ -1,10 +1,7 @@
 package com.company.jmixpm.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
-import io.jmix.core.metamodel.annotation.DependsOnProperties;
-import io.jmix.core.metamodel.annotation.InstanceName;
-import io.jmix.core.metamodel.annotation.JmixEntity;
-import io.jmix.core.metamodel.annotation.JmixProperty;
+import io.jmix.core.metamodel.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,6 +17,10 @@ public class Task {
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
+
+    @PropertyDatatype("color")
+    @Column(name = "COLOR")
+    private String color;
 
     @InstanceName
     @Column(name = "NAME", nullable = false)
@@ -40,6 +41,14 @@ public class Task {
     @JoinColumn(name = "PROJECT_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Project project;
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     @DependsOnProperties({"project", "name"})
     @JmixProperty

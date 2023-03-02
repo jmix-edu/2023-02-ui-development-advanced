@@ -27,6 +27,21 @@
         <dataLoadCoordinator auto="true"/>
         <screenSettings auto="true"/>
         <presentations auto="true"/>
+        <notification id="emailTaskDoneNotification"
+                      caption="Emails have been sent"/>
+        <inputDialog id="emailDialogFacet"
+                     caption="Send email"
+                     dialogActions="OK_CANCEL"
+                     onAction="usersTable.sendEmail">
+            <parameters>
+                <stringParameter id="title"
+                                 caption="Title"
+                                 required="true"/>
+                <stringParameter id="body">
+                    <textArea caption="Body" required="true"/>
+                </stringParameter>
+            </parameters>
+        </inputDialog>
     </facets>
     <dialogMode height="600"
                 width="800"/>

@@ -12,6 +12,9 @@
     <facets>
         <dataLoadCoordinator auto="true"/>
         <screenSettings id="settingsFacet" auto="true"/>
+        <screen id="userInfoScreenFacet"
+                screenClass="com.company.jmixpm.screen.userinfo.UserInfoEdit"
+                onAction="postsTable.viewUserInfo"/>
     </facets>
     <dialogMode height="600"
                 width="800"/>

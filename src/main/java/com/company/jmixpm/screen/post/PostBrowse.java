@@ -33,24 +33,35 @@ public class PostBrowse extends Screen {
                 loadContext.getQuery().getMaxResults());
     }
 
-    @Subscribe("postsTable.viewUserInfo")
-    public void onPostsTableViewUserInfo(Action.ActionPerformedEvent event) {
-        Post selected = postsTable.getSingleSelected();
-        if (selected == null || selected.getUserId() == null) {
-            return;
-        }
-
-        UserInfoEdit userInfoScreen = screenBuilders.screen(this)
-                .withScreenClass(UserInfoEdit.class)
-                .build();
-
-        userInfoScreen.setUserId(selected.getUserId());
-
-        userInfoScreen.show();
-    }
+//    @Subscribe("postsTable.viewUserInfo")
+//    public void onPostsTableViewUserInfo(Action.ActionPerformedEvent event) {
+//        Post selected = postsTable.getSingleSelected();
+//        if (selected == null || selected.getUserId() == null) {
+//            return;
+//        }
+//
+//        UserInfoEdit userInfoScreen = screenBuilders.screen(this)
+//                .withScreenClass(UserInfoEdit.class)
+//                .build();
+//
+//        userInfoScreen.setUserId(selected.getUserId());
+//
+//        userInfoScreen.show();
+//    }
 
     @Install(to = "pagination", subject = "totalCountDelegate")
     private Integer paginationTotalCountDelegate() {
         return postService.getTotalCount();
     }
+
+    @Install(to = "userInfoScreenFacet", subject = "screenConfigurer")
+    private void userInfoScreenFacetScreenConfigurer(UserInfoEdit userInfoEdit) {
+        Post selected = postsTable.getSingleSelected();
+        if (selected == null || selected.getUserId() == null) {
+            throw new IllegalStateException("No post selected");
+        }
+        userInfoEdit.setUserId(selected.getUserId());
+    }
+
+
 }

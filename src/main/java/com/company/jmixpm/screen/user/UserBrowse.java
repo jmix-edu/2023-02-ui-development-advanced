@@ -11,6 +11,7 @@ import io.jmix.ui.app.inputdialog.DialogOutcome;
 import io.jmix.ui.app.inputdialog.InputDialog;
 import io.jmix.ui.app.inputdialog.InputParameter;
 import io.jmix.ui.component.GroupTable;
+import io.jmix.ui.component.NotificationFacet;
 import io.jmix.ui.component.TextArea;
 import io.jmix.ui.component.TextField;
 import io.jmix.ui.executor.BackgroundTask;
@@ -42,8 +43,10 @@ public class UserBrowse extends StandardLookup<User> {
     private Notifications notifications;
     @Autowired
     private BackgroundWorker backgroundWorker;
+    @Autowired
+    private NotificationFacet emailTaskDoneNotification;
 
-    @Subscribe("usersTable.sendEmail")
+    /*@Subscribe("usersTable.sendEmail")
     public void onUsersTableSendEmail(Action.ActionPerformedEvent event) {
         InputDialog inputDialog = dialogs.createInputDialog(this)
                 .withCaption("Enter email attributes")
@@ -77,6 +80,18 @@ public class UserBrowse extends StandardLookup<User> {
                 })
                 .build();
         inputDialog.show();
+    }*/
+
+    @Subscribe("emailDialogFacet")
+    public void onEmailDialogFacetInputDialogClose(InputDialog.InputDialogCloseEvent event) {
+        if (event.closedWith(DialogOutcome.OK)) {
+            String title = event.getValue("title");
+            String body = event.getValue("body");
+
+            Set<User> selected = usersTable.getSelected();
+
+            doSendEmail(title, body, selected);
+        }
     }
 
     private void doSendEmail(String title, String body, Collection<User> users) {
@@ -120,9 +135,7 @@ public class UserBrowse extends StandardLookup<User> {
         @Override
         public void done(Void result) {
             super.done(result);
-            notifications.create()
-                    .withCaption("Emails have been sent")
-                    .show();
+            emailTaskDoneNotification.show();
         }
     }
 
