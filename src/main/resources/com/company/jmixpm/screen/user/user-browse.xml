@@ -87,7 +87,7 @@
                         <action id="usersTable.showUserSubstitutions"/>
                     </actions>
                 </popupButton>
-                <button id="sendEmailBtn" action="usersTable.sendEmail"/>
+                <button id="sendEmailBtn" action="usersTable.sendEmail" stylename="backgroundless"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

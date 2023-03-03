@@ -1,3 +1,5 @@
+import io.jmix.gradle.ui.WidgetsDebug
+
 plugins {
     id 'io.jmix' version '1.4.3'
     id 'java'
@@ -13,6 +15,7 @@ group = 'com.company'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         url 'https://global.repo.jmix.io/repository/public'
@@ -24,8 +27,7 @@ dependencies {
     implementation 'io.jmix.data:jmix-eclipselink-starter'
     implementation 'io.jmix.ui:jmix-ui-starter'
     implementation 'io.jmix.ui:jmix-ui-data-starter'
-    implementation 'io.jmix.ui:jmix-ui-themes-compiled'
-    implementation 'io.jmix.ui:jmix-ui-widgets-compiled'
+//    implementation 'io.jmix.ui:jmix-ui-widgets-compiled'
     implementation 'io.jmix.security:jmix-security-starter'
     implementation 'io.jmix.security:jmix-security-ui-starter'
     implementation 'io.jmix.security:jmix-security-data-starter'
@@ -40,8 +42,28 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    themes 'io.jmix.ui:jmix-ui-themes'
+    implementation 'io.jmix.ui:jmix-ui-themes'
+
+    implementation 'com.company:theme-addon-addon:0.0.1-SNAPSHOT'
+
+    implementation "io.jmix.ui:jmix-ui-widgets"
+    widgets "io.jmix.ui:jmix-ui-widgets"
+
+    implementation 'org.webjars.npm:quill:1.3.6'
 }
 
 test {
     useJUnitPlatform()
+}
+
+compileWidgets() {
+    dependencies {processResources}
+    generate "com.company.jmixpm.widgets.CustomWidgetSet"
+    includePaths("**/io/jmix/**/widget/**", "**/com/company/jmixpm/widgets/**")
+}
+
+task debugWidgets(type: WidgetsDebug, dependsOn: classes) {
+    widgetSetClass 'com.company.jmixpm.widgets.CustomWidgetSet'
+    xmx '-Xmx1600m'
 }
